@@ -6,19 +6,23 @@ import GroceryListForm  from './GroceryListForm'
 //uuid package to produce unique id's for our state
 import { v1 as uuid } from 'uuid';
 
+// import useLocalStorage from '../hooks/useLocalStorage.js'
+
 //Exporting functional component globally
 export default function GroceryList() {
 
 //useState hook to keep a state for our list and setlist method
 //Storing our list as an array of objects
-    const [list, setList] = useState([
-        {item: 'milk', id: 1},
-        {item: 'bacon', id: 2},
-        {item: 'eggs', id:3}
-    ]);
+    const savedlist = JSON.parse(localStorage.getItem('list'));
+    const [list, setList] = useState(savedlist || []);
     const addFood = (item) => {
         setList([...list, {item, id: uuid()}])
     }
+    
+    //     const removeFood = (id) => {
+    //     setList(list.filter(li => li.id !== id));
+    // }
+
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list))
         console.log('test')
